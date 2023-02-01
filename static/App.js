@@ -83,8 +83,88 @@ var AddEntey = function (_React$Component3) {
     return AddEntey;
 }(React.Component);
 
-var IssueList = function (_React$Component4) {
-    _inherits(IssueList, _React$Component4);
+var IssueRow = function (_React$Component4) {
+    _inherits(IssueRow, _React$Component4);
+
+    function IssueRow() {
+        _classCallCheck(this, IssueRow);
+
+        return _possibleConstructorReturn(this, (IssueRow.__proto__ || Object.getPrototypeOf(IssueRow)).apply(this, arguments));
+    }
+
+    _createClass(IssueRow, [{
+        key: 'render',
+        value: function render() {
+            var borderStyle = { border: "1px solid silver", padding: 4 };
+            return React.createElement(
+                'tr',
+                null,
+                React.createElement(
+                    'td',
+                    { style: borderStyle },
+                    this.props.issue_id
+                ),
+                React.createElement(
+                    'td',
+                    { style: borderStyle },
+                    this.props.issue_title
+                )
+            );
+        }
+    }]);
+
+    return IssueRow;
+}(React.Component);
+
+var IssueTable = function (_React$Component5) {
+    _inherits(IssueTable, _React$Component5);
+
+    function IssueTable() {
+        _classCallCheck(this, IssueTable);
+
+        return _possibleConstructorReturn(this, (IssueTable.__proto__ || Object.getPrototypeOf(IssueTable)).apply(this, arguments));
+    }
+
+    _createClass(IssueTable, [{
+        key: 'render',
+        value: function render() {
+            var borderStyle = { border: "1px solid silver", padding: 4 };
+            return React.createElement(
+                'table',
+                { style: { borderCollapse: "collapse" } },
+                React.createElement(
+                    'thead',
+                    null,
+                    React.createElement(
+                        'tr',
+                        null,
+                        React.createElement(
+                            'td',
+                            { style: borderStyle },
+                            'Id'
+                        ),
+                        React.createElement(
+                            'td',
+                            { style: borderStyle },
+                            'Title'
+                        )
+                    )
+                ),
+                React.createElement(
+                    'tbody',
+                    null,
+                    React.createElement(IssueRow, { issue_id: 1, issue_title: 'Error in console when clicking Add' }),
+                    React.createElement(IssueRow, { issue_id: 2, issue_title: 'missing button border on panel' })
+                )
+            );
+        }
+    }]);
+
+    return IssueTable;
+}(React.Component);
+
+var IssueList = function (_React$Component6) {
+    _inherits(IssueList, _React$Component6);
 
     function IssueList() {
         _classCallCheck(this, IssueList);
@@ -104,9 +184,13 @@ var IssueList = function (_React$Component4) {
                     'Issue List Tracker'
                 ),
                 React.createElement('hr', null),
-                React.createElement(Filter, null),
+                React.createElement(
+                    'tr',
+                    null,
+                    React.createElement(Filter, null)
+                ),
                 React.createElement('hr', null),
-                React.createElement(TableOfIssue, null),
+                React.createElement(IssueTable, null),
                 React.createElement('hr', null),
                 React.createElement(AddEntey, null),
                 React.createElement('hr', null)
