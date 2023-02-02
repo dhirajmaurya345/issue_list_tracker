@@ -1,5 +1,3 @@
-//const names=['arun','kanisk','asad'];
-//const message=names.map(c=>`hello ${c}`).join(' ');
 const issues = [
     {
     id: 1, status: 'Open', owner: 'Ravan',
@@ -15,31 +13,6 @@ const issues = [
    ];
    
 var contentNode = document.getElementById("contents");
-
-class Filter extends React.Component{
-    render(){
-        return(
-            <div>This is a place holder issue Filter</div>
-        );
-    }
-}
-
-class TableOfIssue extends React.Component{
-    render(){
-        return(
-            <div>This is a place holder issue Issue Table</div>
-        );
-    }
-}
-
-class AddEntey extends React.Component{
-    render(){
-        return(
-            <div>This is a place holder issue Add Issue</div>
-        );
-    }
-}
-
 class IssueRow extends React.Component{
     render(){
         const issue=this.props.issue;
@@ -81,57 +54,71 @@ class IssueTable extends React.Component{
         )
     }
 }
-
-/*
-class Wrapper extends React.Component{
+class IssueAdd extends React.Component{
+    constructor(){
+        super();
+        this.handleSubmmit=this.handleSubmmit.bind(this);
+    }
+    handleSubmmit(e){
+        console.log("this is form above");
+       e.preventDefault();
+        console.log("this is form",document)
+        var form=document.forms.issueAdd;
+        this.props.createIssue({
+            owner:form.owner.value,
+            title:form.title.value,
+            statu:'New',
+           created:new Date(),
+    });
+        form.owner.value="";form.title.value="";
+       
+}
     render(){
-        const borderedStyle={border:"1px solid silver",padding:4};
         return(
-            <div style={borderedStyle}>{this.props.children}</div>
+            <dive>
+                <form name="issueAdd" onSubmit={this.handleSubmmit}>
+                    <input type="text" name="owner" placeholder="Owner"/>
+                    <input type="text" name="title" placeholder="Title"/>
+                    <button >Add</button>
+                </form>
+            </dive>
         )
-
     }
 }
-*/
 
 class IssueList extends React.Component{
     constructor(){
         super();
         this.state={issues:[]}
-        this.creatTestIssue=this.creatTestIssue.bind(this);
-        setTimeout(this.creatTestIssue,2000);
-       //setTimeout(this.creatTestIssue.bind(this,2000))
+        this.createIssue=this.createIssue.bind(this);
+        
     }
     componentDidMount(){
         this.loadData();
     }
-loadData(){
-    setTimeout(()=>{this.setState({issues:issues});},500);
-}
 
-    creatIssue(newIssue){
+loadData(){
+    setTimeout(()=>{this.setState({issues:issues});},1000);
+        }
+
+    createIssue(newIssue){
     const newIssues=this.state.issues.slice();
     newIssue.id=this.state.issues.length+1;
     newIssues.push(newIssue);
     this.setState({issues:newIssues})
     }
-        creatTestIssue(){
-    this.creatIssue({status: 'New', owner: 'Pieta', created: new Date(),
-    title: 'Completion date should be optional',});
-    }
-    
+
     render(){
         return(
             <div>
-                <h1>Issue List Tracker</h1>
+            <h1>Issue List Tracker</h1>
             <hr/>
-            <tr><Filter/></tr>
             <IssueTable issues={this.state.issues}/>
- <button onClick={this.creatTestIssue}>Add</button>
-            <AddEntey/>
+            <hr/>
+            <IssueAdd createIssue={this.createIssue}/>
             <hr/>
             </div>
         );
     }
-}
-ReactDOM.render(<IssueList />, contentNode); // Render the component inside
+}  
+ReactDOM.render(<IssueList />, contentNode); // Render the component inside 
