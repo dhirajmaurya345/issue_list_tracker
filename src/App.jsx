@@ -97,17 +97,25 @@ class Wrapper extends React.Component{
 class IssueList extends React.Component{
     constructor(){
         super();
-        this.state={issues:issues}
-        setTimeout(this.creatTestIssue.bind(this),2000);
+        this.state={issues:[]}
+        this.creatTestIssue=this.creatTestIssue.bind(this);
+        setTimeout(this.creatTestIssue,2000);
+       //setTimeout(this.creatTestIssue.bind(this,2000))
     }
+    componentDidMount(){
+        this.loadData();
+    }
+loadData(){
+    setTimeout(()=>{this.setState({issues:issues});},500);
+}
+
     creatIssue(newIssue){
     const newIssues=this.state.issues.slice();
     newIssue.id=this.state.issues.length+1;
     newIssues.push(newIssue);
     this.setState({issues:newIssues})
     }
-    
-    creatTestIssue(){
+        creatTestIssue(){
     this.creatIssue({status: 'New', owner: 'Pieta', created: new Date(),
     title: 'Completion date should be optional',});
     }
@@ -119,9 +127,9 @@ class IssueList extends React.Component{
             <hr/>
             <tr><Filter/></tr>
             <IssueTable issues={this.state.issues}/>
+ <button onClick={this.creatTestIssue}>Add</button>
             <AddEntey/>
             <hr/>
-          
             </div>
         );
     }
