@@ -13,28 +13,22 @@ const issues = [
    ];
    
 var contentNode = document.getElementById("contents");
-class IssueRow extends React.Component{
-    render(){
-        const issue=this.props.issue;
-        return(
+const IssueRow=(props)=>(
             <tr>
-             <td>{issue.id}</td>
-             <td>{issue.status}</td>
-             <td>{issue.owner}</td>
-             <td>{issue.created.toDateString()}</td>
-             <td>{issue.effort}</td>
-             <td>{issue.completionDate?issue.completionDate.toDateString():'Not Available'}</td>
-             <td>{issue.title}</td>
+             <td>{props.issue.id}</td>
+             <td>{props.issue.status}</td>
+             <td>{props.issue.owner}</td>
+             <td>{props.issue.created.toDateString()}</td>
+             <td>{props.issue.effort}</td>
+             <td>{props.issue.completionDate?props.issue.completionDate.toDateString():'Not Available'}</td>
+             <td>{props.issue.title}</td>
             </tr>
-           )
-    }
-}
+)
 
-class IssueTable extends React.Component{
+function IssueTable(props){
+    const issueRow_data=props.issues.map(issue=><IssueRow Key={issue.id} issue={issue}/>);
+         return(
 
-    render(){
-        const issueRow_data=this.props.issues.map(issue=><IssueRow Key={issue.id} issue={issue}/>);
-        return(
             <table className="bordered-table">
             <thead>
             <tr>
@@ -51,18 +45,16 @@ class IssueTable extends React.Component{
            {issueRow_data}
             </tbody>
             </table>
-        )
+        );
     }
-}
+
 class IssueAdd extends React.Component{
     constructor(){
         super();
         this.handleSubmmit=this.handleSubmmit.bind(this);
     }
-    handleSubmmit(e){
-        console.log("this is form above");
-       e.preventDefault();
-        console.log("this is form",document)
+  handleSubmmit(e){
+        e.preventDefault();
         var form=document.forms.issueAdd;
         this.props.createIssue({
             owner:form.owner.value,
@@ -91,7 +83,7 @@ class IssueList extends React.Component{
         super();
         this.state={issues:[]}
         this.createIssue=this.createIssue.bind(this);
-        
+
     }
     componentDidMount(){
         this.loadData();

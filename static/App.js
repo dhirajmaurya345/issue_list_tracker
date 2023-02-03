@@ -20,156 +20,122 @@ var issues = [{
 }];
 
 var contentNode = document.getElementById("contents");
+var IssueRow = function IssueRow(props) {
+    return React.createElement(
+        'tr',
+        null,
+        React.createElement(
+            'td',
+            null,
+            props.issue.id
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.issue.status
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.issue.owner
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.issue.created.toDateString()
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.issue.effort
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.issue.completionDate ? props.issue.completionDate.toDateString() : 'Not Available'
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.issue.title
+        )
+    );
+};
 
-var IssueRow = function (_React$Component) {
-    _inherits(IssueRow, _React$Component);
-
-    function IssueRow() {
-        _classCallCheck(this, IssueRow);
-
-        return _possibleConstructorReturn(this, (IssueRow.__proto__ || Object.getPrototypeOf(IssueRow)).apply(this, arguments));
-    }
-
-    _createClass(IssueRow, [{
-        key: 'render',
-        value: function render() {
-            var issue = this.props.issue;
-            return React.createElement(
+function IssueTable(props) {
+    var issueRow_data = props.issues.map(function (issue) {
+        return React.createElement(IssueRow, { Key: issue.id, issue: issue });
+    });
+    return React.createElement(
+        'table',
+        { className: 'bordered-table' },
+        React.createElement(
+            'thead',
+            null,
+            React.createElement(
                 'tr',
                 null,
                 React.createElement(
-                    'td',
+                    'th',
                     null,
-                    issue.id
+                    'ID'
                 ),
                 React.createElement(
-                    'td',
+                    'th',
                     null,
-                    issue.status
+                    'Status'
                 ),
                 React.createElement(
-                    'td',
+                    'th',
                     null,
-                    issue.owner
+                    'Owner'
                 ),
                 React.createElement(
-                    'td',
+                    'th',
                     null,
-                    issue.created.toDateString()
+                    'Creater'
                 ),
                 React.createElement(
-                    'td',
+                    'th',
                     null,
-                    issue.effort
+                    'Effort'
                 ),
                 React.createElement(
-                    'td',
+                    'th',
                     null,
-                    issue.completionDate ? issue.completionDate.toDateString() : 'Not Available'
+                    'Completion Date'
                 ),
                 React.createElement(
-                    'td',
+                    'th',
                     null,
-                    issue.title
+                    'Title'
                 )
-            );
-        }
-    }]);
+            )
+        ),
+        React.createElement(
+            'tbody',
+            null,
+            issueRow_data
+        )
+    );
+}
 
-    return IssueRow;
-}(React.Component);
-
-var IssueTable = function (_React$Component2) {
-    _inherits(IssueTable, _React$Component2);
-
-    function IssueTable() {
-        _classCallCheck(this, IssueTable);
-
-        return _possibleConstructorReturn(this, (IssueTable.__proto__ || Object.getPrototypeOf(IssueTable)).apply(this, arguments));
-    }
-
-    _createClass(IssueTable, [{
-        key: 'render',
-        value: function render() {
-            var issueRow_data = this.props.issues.map(function (issue) {
-                return React.createElement(IssueRow, { Key: issue.id, issue: issue });
-            });
-            return React.createElement(
-                'table',
-                { className: 'bordered-table' },
-                React.createElement(
-                    'thead',
-                    null,
-                    React.createElement(
-                        'tr',
-                        null,
-                        React.createElement(
-                            'th',
-                            null,
-                            'ID'
-                        ),
-                        React.createElement(
-                            'th',
-                            null,
-                            'Status'
-                        ),
-                        React.createElement(
-                            'th',
-                            null,
-                            'Owner'
-                        ),
-                        React.createElement(
-                            'th',
-                            null,
-                            'Creater'
-                        ),
-                        React.createElement(
-                            'th',
-                            null,
-                            'Effort'
-                        ),
-                        React.createElement(
-                            'th',
-                            null,
-                            'Completion Date'
-                        ),
-                        React.createElement(
-                            'th',
-                            null,
-                            'Title'
-                        )
-                    )
-                ),
-                React.createElement(
-                    'tbody',
-                    null,
-                    issueRow_data
-                )
-            );
-        }
-    }]);
-
-    return IssueTable;
-}(React.Component);
-
-var IssueAdd = function (_React$Component3) {
-    _inherits(IssueAdd, _React$Component3);
+var IssueAdd = function (_React$Component) {
+    _inherits(IssueAdd, _React$Component);
 
     function IssueAdd() {
         _classCallCheck(this, IssueAdd);
 
-        var _this3 = _possibleConstructorReturn(this, (IssueAdd.__proto__ || Object.getPrototypeOf(IssueAdd)).call(this));
+        var _this = _possibleConstructorReturn(this, (IssueAdd.__proto__ || Object.getPrototypeOf(IssueAdd)).call(this));
 
-        _this3.handleSubmmit = _this3.handleSubmmit.bind(_this3);
-        return _this3;
+        _this.handleSubmmit = _this.handleSubmmit.bind(_this);
+        return _this;
     }
 
     _createClass(IssueAdd, [{
         key: 'handleSubmmit',
         value: function handleSubmmit(e) {
-            console.log("this is form above");
             e.preventDefault();
-            console.log("this is form", document);
             var form = document.forms.issueAdd;
             this.props.createIssue({
                 owner: form.owner.value,
@@ -203,18 +169,18 @@ var IssueAdd = function (_React$Component3) {
     return IssueAdd;
 }(React.Component);
 
-var IssueList = function (_React$Component4) {
-    _inherits(IssueList, _React$Component4);
+var IssueList = function (_React$Component2) {
+    _inherits(IssueList, _React$Component2);
 
     function IssueList() {
         _classCallCheck(this, IssueList);
 
-        var _this4 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
+        var _this2 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
 
-        _this4.state = { issues: [] };
-        _this4.createIssue = _this4.createIssue.bind(_this4);
+        _this2.state = { issues: [] };
+        _this2.createIssue = _this2.createIssue.bind(_this2);
 
-        return _this4;
+        return _this2;
     }
 
     _createClass(IssueList, [{
@@ -225,10 +191,10 @@ var IssueList = function (_React$Component4) {
     }, {
         key: 'loadData',
         value: function loadData() {
-            var _this5 = this;
+            var _this3 = this;
 
             setTimeout(function () {
-                _this5.setState({ issues: issues });
+                _this3.setState({ issues: issues });
             }, 1000);
         }
     }, {
