@@ -90,7 +90,15 @@ class IssueList extends React.Component{
     }
 
 loadData(){
-    setTimeout(()=>{this.setState({issues:issues});},1000);
+   fetch('/api/issues').then(response=>response.json()).them(data=>{}).then(data=>{
+    console.log("Total record count: ",data._metadata.total_count);
+    data.records.forEach(issue=>{
+        issue.created=new Date(issue.created)
+        if(issue.completionDate)
+        issue.completionDate=new Date(issue.completionDate)
+    })
+    this.setState({issues:data.records})
+   })
         }
 
     createIssue(newIssue){
